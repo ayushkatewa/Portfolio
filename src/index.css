@@ -194,6 +194,42 @@ h2 {
     margin-bottom: 0.5rem;
 }
 
+.gradient-text {
+    background: linear-gradient(90deg, #ffffff, #666666, #ffffff, #444444);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 4s ease infinite;
+}
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Infinite Marquee */
+.marquee-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    -webkit-mask-image: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+}
+.marquee-content {
+    display: flex;
+    gap: 1.5rem;
+    padding-right: 1.5rem;
+    animation: scrollMarquee 25s linear infinite;
+    min-width: max-content;
+}
+.marquee-content.reverse {
+    animation-direction: reverse;
+}
+@keyframes scrollMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 0.75rem)); }
+}
+
 h3 {
     font-size: 1.3rem;
     font-weight: 600;

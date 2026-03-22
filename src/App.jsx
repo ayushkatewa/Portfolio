@@ -120,6 +120,53 @@ const ScrambleText = ({ text }) => {
   return <span onMouseEnter={handleHover}>{display}</span>;
 };
 
+// --- Elastic Bouncing Text Physics ---
+const BouncingText = ({ text }) => {
+  const textRef = useRef();
+  
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".bounce-char", {
+        y: -80,
+        opacity: 0,
+        rotationX: 90,
+        stagger: 0.05,
+        duration: 1.5,
+        ease: "elastic.out(1, 0.4)",
+        scrollTrigger: { trigger: textRef.current, start: "top 80%" }
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <h1 ref={textRef} style={{ display: 'inline-block', perspective: 400 }}>
+      {text.split('').map((char, index) => (
+        <span 
+           key={index} 
+           className="bounce-char gradient-text" 
+           style={{ display: 'inline-block', whiteSpace: char === ' ' ? 'pre' : 'normal', margin: 0 }}
+        >
+          {char}
+        </span>
+      ))}
+    </h1>
+  );
+};
+
+// --- Infinite Dual-Directional Marquee ---
+const InfiniteMarquee = ({ items, reverse = false }) => {
+  return (
+    <div className="marquee-wrapper">
+      <div className={`marquee-content ${reverse ? 'reverse' : ''}`}>
+        {[...items, ...items, ...items, ...items].map((item, i) => (
+           <div className="skill-chip glow-chip" key={i}><ScrambleText text={item} /></div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // --- UI Sound Synthesizer ---
 const playTick = () => {
     try {
@@ -159,7 +206,7 @@ const LiquidBackground = () => {
   );
 };
 
-// --- 5. Universal 3D Tilt Card ---
+// --- 5. Universal Card Wrapper ---
 const TiltCard = ({ children, className, style, href, glow = true, imageSrc }) => {
   const cardRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -174,20 +221,6 @@ const TiltCard = ({ children, className, style, href, glow = true, imageSrc }) =
       cardRef.current.style.setProperty('--mouse-x', `${x}px`);
       cardRef.current.style.setProperty('--mouse-y', `${y}px`);
     }
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const maxTilt = rect.width > 500 ? 2.5 : 6; 
-    const rotateX = ((y - centerY) / centerY) * -maxTilt;
-    const rotateY = ((x - centerX) / centerX) * maxTilt;
-
-    gsap.to(cardRef.current, { 
-       rotateX, 
-       rotateY, 
-       transformPerspective: 1200, 
-       duration: 0.5, 
-       ease: "power2.out" 
-    });
   };
 
   const handleMouseEnter = () => {
@@ -197,8 +230,6 @@ const TiltCard = ({ children, className, style, href, glow = true, imageSrc }) =
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    if (!cardRef.current) return;
-    gsap.to(cardRef.current, { rotateX: 0, rotateY: 0, duration: 0.8, ease: "power2.out" });
   };
 
   const Component = href ? 'a' : 'div';
@@ -211,7 +242,7 @@ const TiltCard = ({ children, className, style, href, glow = true, imageSrc }) =
       onMouseMove={handleMouseMove} 
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      style={{ ...style, willChange: 'transform', position: 'relative' }}
+      style={{ ...style, position: 'relative' }}
       {...props}
     >
       {imageSrc && (
@@ -299,26 +330,6 @@ function App() {
             scrollTrigger: { trigger: ".container", start: "top 90%" }
         });
 
-        // --- 7. Scroll Velocity Skew Physics ---
-        let proxy = { skew: 0 };
-        const skewSetter = gsap.quickSetter(".bento-card, .project-card, .card-explore", "skewY", "deg");
-        const clamp = gsap.utils.clamp(-12, 12); 
-
-        ScrollTrigger.create({
-          onUpdate: (self) => {
-            const skew = clamp(self.getVelocity() / -150); 
-            if (Math.abs(skew) > Math.abs(proxy.skew)) {
-               proxy.skew = skew;
-               gsap.to(proxy, {
-                   skew: 0, 
-                   duration: 0.8, 
-                   ease: "power3", 
-                   overwrite: true, 
-                   onUpdate: () => skewSetter(proxy.skew)
-               });
-            }
-          }
-        });
     });
     return () => ctx.revert();
   }, [loaded]);
@@ -354,14 +365,14 @@ function App() {
         
         {/* HERO */}
         <section className="hero fade-up">
-          <h1>Hi, I'm Ayush Katewa</h1>
-          <h2 className="animated-role" key={roleIndex}>{roles[roleIndex]}</h2>
+          <BouncingText text="Hi, I'm Ayush Katewa" />
+          <h2 className="animated-role" key={roleIndex}><ScrambleText text={roles[roleIndex]} /></h2>
         </section>
 
         {/* ABOUT */}
         <section id="about" className="fade-up">
           <div className="section-header">
-            <h2>About</h2>
+            <h2 className="gradient-text"><ScrambleText text="About" /></h2>
             <p>Driven by logic, obsessed with performance.</p>
           </div>
           <AboutCard />
@@ -370,7 +381,7 @@ function App() {
         {/* PROJECTS */}
         <section id="projects" className="fade-up">
           <div className="section-header">
-            <h2>Featured Projects</h2>
+            <h2 className="gradient-text"><ScrambleText text="Featured Projects" /></h2>
             <p>A curated selection of projects that made me confident in building software.</p>
           </div>
           
@@ -427,31 +438,31 @@ function App() {
 
         {/* SKILLS */}
         <section id="skills" className="fade-up">
-          <h2>My Skills</h2>
-          <div className="skills-container">
-            {['C++', 'Java', 'Python', 'C', 'React', 'HTML/CSS', 'Data Structures', 'Algorithms', 'System Design', 'Git/GitHub', 'SQL'].map(skill => (
-                <div className="skill-chip" key={skill}>{skill}</div>
-            ))}
+          <h2 className="gradient-text"><ScrambleText text="Tech Arsenal" /></h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100vw', marginLeft: 'calc(-50vw + 50%)', overflow: 'hidden', padding: '2rem 0' }}>
+            <InfiniteMarquee items={['C++', 'Java', 'Python', 'Go', 'JavaScript', 'HTML/CSS']} />
+            <InfiniteMarquee items={['React', 'Node.js', 'Express', 'SQL', 'MongoDB']} reverse={true} />
+            <InfiniteMarquee items={['Data Structures', 'Algorithms', 'System Design', 'Git/GitHub']} />
           </div>
         </section>
 
         {/* EXPLORE / OTHER */}
         <section id="explore" className="fade-up" style={{ paddingBottom: '6rem' }}>
-          <h2>More to Explore</h2>
+          <h2 className="gradient-text"><ScrambleText text="More to Explore" /></h2>
           <p>Check out these additional resources and connect with me</p>
           
           <div className="explore-bento">
             <div className="explore-col">
               <TiltCard href="https://www.linkedin.com/in/ayush-katewa" className="card-explore magnetic-card">
                 <div style={{ position: 'relative', zIndex: 1 }}>
-                  <h3>My Links</h3>
+                  <h3><ScrambleText text="My Links" /></h3>
                   <p>Find me across the web and LinkedIn</p>
                 </div>
                 <div className="arrow-icon" style={{ position: 'relative', zIndex: 1 }}>↗</div>
               </TiltCard>
               <TiltCard className="card-explore magnetic-card">
                 <div style={{ position: 'relative', zIndex: 1 }}>
-                  <h3>Achievements</h3>
+                  <h3><ScrambleText text="Achievements" /></h3>
                   <p>Top 10 Rank InnovateX Hackathon, LPU C Programming Certification</p>
                 </div>
                 <div className="arrow-icon" style={{ position: 'relative', zIndex: 1 }}>★</div>
@@ -460,7 +471,7 @@ function App() {
 
             <TiltCard href="mailto:katewaayush23@gmail.com" className="card-explore card-contact magnetic-card">
               <div className="contact-content">
-                <h3>Let's Talk</h3>
+                <h3><ScrambleText text="Let's Talk" /></h3>
                 <p>Ready to build scalable architectures? Send me an email to start collaborating.</p>
               </div>
               <div className="arrow-icon large-icon" style={{ zIndex: 0 }}>✉</div>
