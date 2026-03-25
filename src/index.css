@@ -1640,3 +1640,31 @@ p {
 .magnetic-wrapper:focus-within {
   outline: none;
 }
+
+/* Contact Form Success State */
+.form-success-message {
+  text-align: center;
+  padding: 2rem 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.form-success-message i {
+  font-size: 3.5rem;
+  color: var(--accent-orange);
+  margin-bottom: 1rem;
+}
+
+.form-success-message h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-success-message p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

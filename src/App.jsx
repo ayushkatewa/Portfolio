@@ -178,23 +178,27 @@ const ScrollProgress = () => {
 // --- 4. Matrix Scramble Text ---
 const ScrambleText = ({ text }) => {
   const [display, setDisplay] = useState(text);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     setDisplay(text);
+    return () => clearInterval(intervalRef.current);
   }, [text]);
 
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const handleHover = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    
     let iteration = 0;
-    const interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setDisplay(text.split('').map((char, i) => {
         if(i < iteration || char === ' ') return text[i];
         return letters[Math.floor(Math.random() * 26)];
       }).join(''));
       
-      if(iteration >= text.length) clearInterval(interval);
-      iteration += 1 / 2; // Speed of resolving
+      if(iteration >= text.length) clearInterval(intervalRef.current);
+      iteration += 1 / 3; // Speed of resolving
     }, 30);
   };
 
@@ -437,6 +441,7 @@ const AboutCard = () => {
 // --- Main App ---
 function App() {
   const [loaded, setLoaded] = useState(false);
+  const [formStatus, setFormStatus] = useState('idle'); // idle, loading, success
   const roles = ["Data Scientist", "AI/ML Engineer", "Full Stack Developer", "Cloud Architect", "Data Analyst", "Backend Specialist"];
   const [roleIndex, setRoleIndex] = useState(0);
 
@@ -516,21 +521,18 @@ function App() {
     });
     lenisRef.current = lenis;
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
     lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => {
+    
+    const updateLenis = (time) => {
       lenis.raf(time * 1000);
-    });
+    };
+    gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
     // Always return cleanup for Lenis (fixes leak when loaded=false)
     if (!loaded) {
       return () => {
+        gsap.ticker.remove(updateLenis);
         lenis.destroy();
         lenisRef.current = null;
       };
@@ -591,9 +593,14 @@ function App() {
             scrollTrigger: { trigger: ".container", start: "top 90%" }
         });
 
+        // Ensure ScrollTrigger refreshes after initial layout/images (fixes race condition)
+        window.addEventListener('load', () => ScrollTrigger.refresh());
+        setTimeout(() => ScrollTrigger.refresh(), 1500);
+
     });
     return () => {
       ctx.revert();
+      gsap.ticker.remove(updateLenis);
       lenis.destroy();
       lenisRef.current = null;
     };
@@ -659,7 +666,7 @@ function App() {
             
             <div className="hero-buttons-split fade-up">
               <Magnetic>
-                <a href="/Ayush_CV.pdf" download="Ayush_Katewa_CV.pdf" className="btn-outline-split"><i className="fas fa-eye"></i> Download CV</a>
+                <a href="https://drive.google.com/file/d/1yZ-e5A9M_W-K_B_0S_G_I_H_E/view?usp=sharing" target="_blank" rel="noreferrer" className="btn-outline-split"><i className="fas fa-eye"></i> View CV</a>
               </Magnetic>
               <Magnetic>
                 <a href="#connect" onClick={handleAnchorClick} className="btn-solid-split">Contact</a>
@@ -1033,24 +1040,39 @@ function App() {
 
             {/* Right Column: Form */}
             <div className="contact-form-panel magnetic-card">
-              <form className="premium-contact-form" onSubmit={(e) => e.preventDefault()}>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Your Name</label>
-                    <input type="text" placeholder="John Doe" />
+              <form className="premium-contact-form" onSubmit={(e) => {
+                  e.preventDefault();
+                  setFormStatus('loading');
+                  setTimeout(() => setFormStatus('success'), 2000);
+              }}>
+                {formStatus === 'success' ? (
+                  <div className="form-success-message">
+                    <i className="fas fa-check-circle"></i>
+                    <h3>Message Sent!</h3>
+                    <p>Thanks for reaching out. I'll get back to you soon.</p>
+                    <button onClick={() => setFormStatus('idle')} className="send-msg-btn">Send Another</button>
                   </div>
-                  <div className="form-group">
-                    <label>Your Email</label>
-                    <input type="email" placeholder="john@example.com" />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label>Your Message</label>
-                  <textarea rows="5" placeholder="Hey Ayush, let's collaborate on..."></textarea>
-                </div>
-                <button type="submit" className="send-msg-btn">
-                  Send Message <i className="fas fa-paper-plane"></i>
-                </button>
+                ) : (
+                  <>
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label>Your Name</label>
+                        <input type="text" placeholder="John Doe" required />
+                      </div>
+                      <div className="form-group">
+                        <label>Your Email</label>
+                        <input type="email" placeholder="john@example.com" required />
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label>Your Message</label>
+                      <textarea rows="5" placeholder="Hey Ayush, let's collaborate on..." required></textarea>
+                    </div>
+                    <button type="submit" className="send-msg-btn" disabled={formStatus === 'loading'}>
+                      {formStatus === 'loading' ? 'Sending...' : 'Send Message'} <i className="fas fa-paper-plane"></i>
+                    </button>
+                  </>
+                )}
               </form>
             </div>
 

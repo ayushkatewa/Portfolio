@@ -6,7 +6,7 @@ A premium, Awwwards-winning developer portfolio built with React, Vite, and GSAP
 - **Framework:** React + Vite
 - **Styling:** Pure Vanilla CSS (Variables, Grid, Bento Layouts)
 - **Animation Engine:** GSAP (ScrollTrigger)
-- **Typography:** `Inter` (Sans-serif, Apple-style clean typography)
+- **Typography:** `Outfit` & `Space Grotesk` (Premium, modern geometric typography)
 
 ## ✨ Premium Micro-Interactions & Animations
 
