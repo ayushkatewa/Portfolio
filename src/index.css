@@ -588,6 +588,15 @@ p {
     opacity: 1;
 }
 
+.fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.split-heading {
+    opacity: 1 !important;
+}
+
 .bento-header { margin-bottom: 2rem; }
 .span-2 { grid-column: span 2; }
 
@@ -597,89 +606,34 @@ p {
     gap: 3rem;
 }
 
-/* Premium Projects Layout */
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-top: 2.5rem;
-}
-
-/* Horizontal Scroll for Projects */
+/* Projects Section - Static Grid */
 .projects-section-container {
     width: 100%;
-    overflow: hidden;
-    position: relative;
-    padding-bottom: 5rem;
+    padding: 8rem 0;
+    overflow: visible;
 }
 
-.projects-horizontal-wrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    padding: 0 10vw;
-    width: fit-content;
-    height: 80vh;
-    align-items: center;
-    gap: 4rem;
-}
-
-.horizontal-project-item {
-    width: clamp(400px, 35vw, 600px);
-    flex-shrink: 0;
-}
-
-/* Mobile fallback: stack vertically */
-@media (max-width: 768px) {
-    .projects-section-container {
-        overflow: visible;
-    }
-    .projects-horizontal-wrapper {
-        flex-direction: column;
-        width: 100%;
-        height: auto;
-        padding: 0 1.5rem;
-        gap: 2rem;
-    }
-    .horizontal-project-item {
-        width: 100%;
-    }
-}
-
-/* Magnetic wrapper */
-.magnetic-wrapper {
-    display: inline-block;
-    will-change: transform;
-}
-
-.projects-grid-3col {
+.projects-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-@media (max-width: 1024px) {
-    .projects-grid-3col { grid-template-columns: repeat(2, 1fr); padding: 0 1rem; }
-}
-@media (max-width: 768px) {
-    .projects-grid-3col { grid-template-columns: 1fr; }
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    padding: 2rem 0;
 }
 
 .project-card-v2 {
-    background: #111;
-    border: 1px solid #222;
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 24px;
+    padding: 2rem;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .project-card-v2:hover {
-    border-color: #ff5500;
-    box-shadow: 0 10px 30px rgba(255, 85, 0, 0.15);
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    border-color: rgba(255, 85, 0, 0.3);
 }
 
 .project-card-inner {
@@ -1452,7 +1406,7 @@ p {
 @media (max-width: 768px) {
     .bento-grid, .projects-grid, .explore-bento, .connect-grid, .about-split { grid-template-columns: 1fr; }
     .span-2 { grid-column: span 1; }
-    h1 { font-size: 2.5rem; }
+    h1 { font-size: 2.5rem;}
     .container { padding: 6rem 1.5rem 3rem; gap: 4rem; }
     .cursor-ring, .cursor-dot { display: none !important; }
     * { cursor: auto !important; }
