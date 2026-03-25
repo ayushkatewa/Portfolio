@@ -695,7 +695,10 @@ function App() {
         </section>
 
         {/* ACADEMICS */}
-        <section id="education" className="fade-up">
+        <section id="education" className="fade-up academics-section">
+          {/* Subtle Background Watermark */}
+          <div className="academics-background-text">LEARN</div>
+          
           <div className="section-header">
             <h2 className="gradient-text split-heading">Academics</h2>
             <p>My educational journey and academic foundational milestones.</p>

@@ -1129,6 +1129,25 @@ p {
     padding: 2rem 0;
 }
 
+.academics-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.academics-background-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 25vw;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.02);
+    z-index: 0;
+    pointer-events: none;
+    letter-spacing: -2vw;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
 .academics-timeline-v2::before {
     content: '';
     position: absolute;
@@ -1136,8 +1155,9 @@ p {
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(to bottom, transparent, rgba(255, 85, 0, 0.3), rgba(255, 85, 0, 0.3), transparent);
+    background: linear-gradient(to bottom, transparent, rgba(255, 85, 0, 0.4), rgba(255, 85, 0, 0.4), transparent);
     transform: translateX(-50%);
+    box-shadow: 0 0 10px rgba(255, 85, 0, 0.2);
 }
 
 .academics-item {
@@ -1156,49 +1176,65 @@ p {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 16px;
-    height: 16px;
-    background: #030303;
-    border: 3px solid #ff5500;
+    width: 14px;
+    height: 14px;
+    background: #ff5500;
+    border: 3px solid #030303;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
-    box-shadow: 0 0 15px rgba(255, 85, 0, 0.6);
+    box-shadow: 0 0 20px rgba(255, 85, 0, 0.8);
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    0% { box-shadow: 0 0 0 0 rgba(255, 85, 0, 0.7); }
+    70% { box-shadow: 0 0 0 12px rgba(255, 85, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 85, 0, 0); }
 }
 
 .academics-card {
-    width: 45%;
-    background: #0a0a0a;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-left: 4px solid #ff5500;
-    border-top: 4px solid #ff5500;
+    width: 48%;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
-    padding: 2rem;
+    padding: 2.2rem;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
+    overflow: hidden;
+}
+
+.academics-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 85, 0, 0.05) 0%, transparent 100%);
+    z-index: -1;
 }
 
 /* Add a connector line from dot to card */
 .academics-item::after {
     content: '';
     position: absolute;
-    left: 45%;
+    left: 48%;
     top: 50%;
-    width: 5%;
+    width: 2%;
     height: 1px;
-    background: rgba(255, 85, 0, 0.3);
+    background: linear-gradient(to right, rgba(255, 85, 0, 0.8), rgba(255, 85, 0, 0.1));
     z-index: 1;
 }
 
 .academics-item.reversed::after {
     left: auto;
-    right: 45%;
+    right: 48%;
+    background: linear-gradient(to left, rgba(255, 85, 0, 0.8), rgba(255, 85, 0, 0.1));
 }
 
 .academics-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    border-color: rgba(255, 85, 0, 0.3);
-    box-shadow: 0 20px 40px rgba(255, 85, 0, 0.1);
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(255, 85, 0, 0.5);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 85, 0, 0.1);
 }
 
 .academics-header {
