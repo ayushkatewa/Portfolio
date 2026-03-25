@@ -23,7 +23,12 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    cursor: none !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    * {
+        cursor: none !important;
+    }
 }
 
 body {
@@ -1606,4 +1611,32 @@ p {
     margin-left: 35px;
     padding: 1.5rem;
   }
+}
+
+/* Accessibility & Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .cursor-ring, .cursor-dot {
+    display: none !important;
+  }
+
+  [data-scroll-container] {
+    transform: none !important;
+  }
+}
+
+/* Keyboard Navigation Focus Styles */
+:focus-visible {
+  outline: 2px solid var(--accent-orange) !important;
+  outline-offset: 4px;
+}
+
+.magnetic-wrapper:focus-within {
+  outline: none;
 }

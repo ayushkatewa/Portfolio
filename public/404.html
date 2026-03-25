@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found</title>
+    <style>
+        :root {
+            --bg: #030303;
+            --accent: #ff5500;
+            --text: #f5f5f7;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 8rem;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p {
+            font-size: 1.5rem;
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+        a {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 85, 0, 0.3);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <p>You've drifted into deep space. The page you're looking for doesn't exist.</p>
+        <a href="/">Return Home</a>
+    </div>
+</body>
+</html>

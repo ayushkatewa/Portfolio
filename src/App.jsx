@@ -1,9 +1,6 @@
 import React, { useLayoutEffect, useEffect, useState, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Draggable } from 'gsap/all';
-import { Canvas } from '@react-three/fiber';
-import { Stars, MeshDistortMaterial, Sphere } from '@react-three/drei';
 import Lenis from 'lenis';
 import SplitType from 'split-type';
 import 'lenis/dist/lenis.css';
@@ -15,14 +12,20 @@ import airQualityImg from './assets/air_quality.png';
 import educationImg from './assets/education.png';
 import profileImg from './assets/hero.png';
 
-gsap.registerPlugin(ScrollTrigger, Draggable);
+gsap.registerPlugin(ScrollTrigger);
 
 // --- 1. Custom Trailing Cursor (Event Delegation) ---
 const CustomCursor = () => {
   const cursorRef = useRef(null);
   const dotRef = useRef(null);
+  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
+    // Check if device is touch-only (no hover capability)
+    if (window.matchMedia('(hover: none)').matches) {
+      setIsTouch(true);
+      return;
+    }
     const moveCursor = (e) => {
       gsap.to(cursorRef.current, { x: e.clientX, y: e.clientY, duration: 0.15, ease: "power2.out" });
       gsap.to(dotRef.current, { x: e.clientX, y: e.clientY, duration: 0, ease: "none" });
@@ -62,6 +65,8 @@ const CustomCursor = () => {
       document.removeEventListener('mouseout', handleMouseOut);
     };
   }, []);
+
+  if (isTouch) return null;
 
   return (
     <>
@@ -549,21 +554,23 @@ function App() {
     
     // Trigger reveals ONLY after preloader finishes
     const ctx = gsap.context(() => {
-        // Split-Type Reveals
-        const splitHeadings = document.querySelectorAll('.split-heading');
-        splitHeadings.forEach(heading => {
-          const split = new SplitType(heading, { types: 'lines,words' });
-          gsap.from(split.words, {
-            y: 100,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.05,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: heading,
-              start: "top 90%",
-              toggleActions: "play none none reverse"
-            }
+        // Split-Type Reveals (Guarded by font load to ensure correct metrics)
+        document.fonts.ready.then(() => {
+          const splitHeadings = document.querySelectorAll('.split-heading');
+          splitHeadings.forEach(heading => {
+            const split = new SplitType(heading, { types: 'lines,words' });
+            gsap.from(split.words, {
+              y: 100,
+              opacity: 0,
+              duration: 1,
+              stagger: 0.05,
+              ease: "power4.out",
+              scrollTrigger: {
+                trigger: heading,
+                start: "top 90%",
+                toggleActions: "play none none reverse"
+              }
+            });
           });
         });
 
