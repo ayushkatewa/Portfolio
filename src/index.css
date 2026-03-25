@@ -1149,15 +1149,7 @@ p {
 }
 
 .academics-timeline-v2::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom, transparent, rgba(255, 85, 0, 0.4), rgba(255, 85, 0, 0.4), transparent);
-    transform: translateX(-50%);
-    box-shadow: 0 0 10px rgba(255, 85, 0, 0.2);
+    display: none; /* Reference shows no central line */
 }
 
 .academics-item {
@@ -1178,99 +1170,98 @@ p {
     top: 50%;
     width: 14px;
     height: 14px;
-    background: #ff5500;
-    border: 3px solid #030303;
+    background: transparent;
+    border: 2px solid #ff5500;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
-    box-shadow: 0 0 20px rgba(255, 85, 0, 0.8);
-    animation: pulse-dot 2s infinite;
-}
-
-@keyframes pulse-dot {
-    0% { box-shadow: 0 0 0 0 rgba(255, 85, 0, 0.7); }
-    70% { box-shadow: 0 0 0 12px rgba(255, 85, 0, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 85, 0, 0); }
+    box-shadow: 0 0 10px rgba(255, 85, 0, 0.4);
 }
 
 .academics-card {
     width: 48%;
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #0d0d0d;
     border-radius: 20px;
-    padding: 2.2rem;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 2rem;
     position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.03);
     overflow: hidden;
+    text-align: left;
 }
 
 .academics-card::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255, 85, 0, 0.05) 0%, transparent 100%);
-    z-index: -1;
-}
-
-/* Add a connector line from dot to card */
-.academics-item::after {
-    content: '';
-    position: absolute;
-    left: 48%;
-    top: 50%;
-    width: 2%;
-    height: 1px;
-    background: linear-gradient(to right, rgba(255, 85, 0, 0.8), rgba(255, 85, 0, 0.1));
-    z-index: 1;
-}
-
-.academics-item.reversed::after {
-    left: auto;
-    right: 48%;
-    background: linear-gradient(to left, rgba(255, 85, 0, 0.8), rgba(255, 85, 0, 0.1));
-}
-
-.academics-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    border-color: rgba(255, 85, 0, 0.5);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 85, 0, 0.1);
+    left: 0;
+    top: 15%;
+    bottom: 15%;
+    width: 6px;
+    background: #ff5500;
+    box-shadow: 0 0 20px rgba(255, 85, 0, 0.6);
+    border-radius: 0 4px 4px 0;
 }
 
 .academics-header {
     display: flex;
-    align-items: flex-start;
-    gap: 1.2rem;
-    margin-bottom: 1.5rem;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+.academics-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 85, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .academics-icon {
-    font-size: 2rem;
+    font-size: 1.2rem;
     color: #ff5500;
-    margin-top: 0.2rem;
 }
 
-.academics-meta {
+.academics-year-row {
     display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
 }
 
-.academics-year {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #ff5500;
-    letter-spacing: 0.5px;
+.academics-separator {
+    color: rgba(255, 255, 255, 0.2);
 }
 
 .academics-location {
-    font-size: 0.85rem;
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.5);
 }
 
-.academics-location i {
-    font-size: 0.75rem;
-    margin-right: 0.3rem;
+.academics-card h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: #fff;
+}
+
+.academics-school {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 1.5rem;
+}
+
+.academics-badge {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid rgba(255, 85, 0, 0.5);
+    border-radius: 12px;
+    color: #ff5500;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 85, 0, 0.05);
 }
 
 .academics-card h3 {

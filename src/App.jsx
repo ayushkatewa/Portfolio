@@ -712,15 +712,19 @@ function App() {
               <Magnetic>
                 <div className="academics-card">
                   <div className="academics-header">
-                    <i className="fas fa-graduation-cap academics-icon"></i>
+                    <div className="academics-icon-wrapper">
+                      <i className="fas fa-graduation-cap academics-icon"></i>
+                    </div>
                     <div className="academics-meta">
-                      <span className="academics-year">Aug' 23 - Present</span>
+                      <div className="academics-year-row">
+                        <span className="academics-year">Aug' 23 - Present</span>
+                      </div>
                       <span className="academics-location"><i className="fas fa-location-dot"></i> Phagwara, Punjab</span>
                     </div>
                   </div>
-                  <h3>B.Tech CSE</h3>
+                  <h3>BTech CSE</h3>
                   <p className="academics-school">Lovely Professional University</p>
-                  <div className="academics-badge">CGPA: 7.24</div>
+                  <div className="academics-badge">CGPA: 6.97</div>
                 </div>
               </Magnetic>
             </div>
@@ -731,15 +735,20 @@ function App() {
               <Magnetic>
                 <div className="academics-card">
                   <div className="academics-header">
-                    <i className="fas fa-graduation-cap academics-icon"></i>
+                    <div className="academics-icon-wrapper">
+                      <i className="fas fa-graduation-cap academics-icon"></i>
+                    </div>
                     <div className="academics-meta">
-                      <span className="academics-year">Apr' 21 - Mar' 22</span>
-                      <span className="academics-location"><i className="fas fa-location-dot"></i> Jhunjhunu, Rajasthan</span>
+                      <div className="academics-year-row">
+                        <span className="academics-year">Apr' 21 - Mar' 22</span>
+                        <span className="academics-separator">|</span>
+                        <span className="academics-location">Kanpur, Uttar Pradesh</span>
+                      </div>
                     </div>
                   </div>
                   <h3>Intermediate</h3>
-                  <p className="academics-school">Aakash Academy School</p>
-                  <div className="academics-badge">PERCENTAGE: 86.80%</div>
+                  <p className="academics-school">The Jain International School</p>
+                  <div className="academics-badge">PERCENTAGE: 62%</div>
                 </div>
               </Magnetic>
             </div>
@@ -750,15 +759,20 @@ function App() {
               <Magnetic>
                 <div className="academics-card">
                   <div className="academics-header">
-                    <i className="fas fa-graduation-cap academics-icon"></i>
+                    <div className="academics-icon-wrapper">
+                      <i className="fas fa-graduation-cap academics-icon"></i>
+                    </div>
                     <div className="academics-meta">
-                      <span className="academics-year">Apr' 19 - Mar' 20</span>
-                      <span className="academics-location"><i className="fas fa-location-dot"></i> Jhunjhunu, Rajasthan</span>
+                      <div className="academics-year-row">
+                        <span className="academics-year">Apr' 19 - Mar' 20</span>
+                        <span className="academics-separator">|</span>
+                        <span className="academics-location">Kanpur, Uttar Pradesh</span>
+                      </div>
                     </div>
                   </div>
                   <h3>Matriculation</h3>
-                  <p className="academics-school">Kissan Public School</p>
-                  <div className="academics-badge">PERCENTAGE: 86.80%</div>
+                  <p className="academics-school">The Jain International School</p>
+                  <div className="academics-badge">PERCENTAGE: 89%</div>
                 </div>
               </Magnetic>
             </div>
