@@ -312,23 +312,7 @@ const playTick = () => {
     } catch(e) {}
 };
 
-// --- WebGL Liquid Background ---
-const LiquidBackground = () => {
-  return (
-    <Sphere args={[2, 64, 64]} scale={5} position={[0, 0, -2]}>
-      <MeshDistortMaterial 
-         color="#060606" 
-         attach="material" 
-         distort={0.5} 
-         speed={1.5} 
-         roughness={0.2} 
-         metalness={0.8}
-      />
-    </Sphere>
-  );
-};
-
-// --- 5. Universal Card Wrapper (Enhanced Tilt) ---
+// --- Universal Card Wrapper (Enhanced Tilt) ---
 const TiltCard = ({ children, className, style, href, glow = true, imageSrc }) => {
   const cardRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -630,12 +614,7 @@ function App() {
       <ScrollProgress />
       <Preloader onComplete={() => setLoaded(true)} />
 
-      {/* 3D Liquid Background without Stars for premium aesthetic */}
-      <Canvas className="three-bg" camera={{ position: [0, 0, 1] }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <LiquidBackground />
-      </Canvas>
+      {/* Marquee bg */}
 
       {/* Infinite Marquee bg */}
       <div className="bg-marquee">
